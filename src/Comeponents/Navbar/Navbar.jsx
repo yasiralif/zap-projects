@@ -3,6 +3,8 @@ import { Link, NavLink } from 'react-router';
 import Logo from '../Shared/Logo';
 import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
+import "./Navbar.css";
+
 const Navbar = () => {
   const {user,logOut}=useAuth()
   const handelLogOut=()=>{
@@ -28,20 +30,23 @@ const Navbar = () => {
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
    <li> <NavLink>Home</NavLink></li>
-      <li> <NavLink>Services</NavLink></li>
-      <li> <NavLink>About</NavLink></li>
-      <li> <NavLink>Blog</NavLink></li>
-      <li> <NavLink>Contact</NavLink></li>
+       <li> <NavLink to='/'>Home</NavLink></li>
+      <li> <NavLink to='/services'>Services</NavLink></li>
+      <li> <NavLink to='/about'>About</NavLink></li>
+      <li> <NavLink to='/blog'>Blog</NavLink></li>
+      <li> <NavLink to='/send-percel'>Send A Percel</NavLink></li>
+      <li> <NavLink to='/contact'>Contact</NavLink></li>
+       
       </ul>
     </div>
     <a className="btn btn-ghost text-xl"><Logo></Logo></a>
   </div>
   <div className="navbar-center hidden lg:flex">
-    <ul className="menu  menu-horizontal px-1">
-      <li> <NavLink>Home</NavLink></li>
-      <li> <NavLink>Services</NavLink></li>
+    <ul className="menu gap-2  text-gray-400 menu-horizontal px-1">
+      <li> <NavLink to='/'>Home</NavLink></li>
+      <li> <NavLink to='/services'>Services</NavLink></li>
       <li> <NavLink to='/about'>About</NavLink></li>
-      <li> <NavLink>Blog</NavLink></li>
+      <li> <NavLink to='/blog'>Blog</NavLink></li>
       <li> <NavLink to='/send-percel'>Send A Percel</NavLink></li>
       <li> <NavLink to='/contact'>Contact</NavLink></li>
        

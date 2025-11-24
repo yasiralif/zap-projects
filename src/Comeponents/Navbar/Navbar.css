@@ -1,0 +1,12 @@
+/* .active{
+   background-color: #cdec6f;
+} */
+ /* li > a[aria-current="page"] {
+  background-color: #cdec6f;
+  border-radius: 8px;
+} */
+li .active{
+     background-color: #cdec6f;
+     border-radius: 12px;
+     color: #71717A;
+}

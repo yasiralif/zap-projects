@@ -1,35 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import { set, useForm, useWatch } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 const SendPercel = () => {
-    const { handleSubmit, register,control, watch ,formState: { errors } } = useForm();
-    const [reginospromise, setreginospromise]=useState([])
-    const [reginos, setreginos]=useState([])
+    const { handleSubmit, register, control, watch, formState: { errors } } = useForm();
+    const [reginospromise, setreginospromise] = useState([])
+    const [reginos, setreginos] = useState([])
     // console.log(reginospromise);
-    const dublicateRegions =reginospromise.map(c=>c.region)
-    const singelRegions =[...new Set(dublicateRegions)]
+    const dublicateRegions = reginospromise.map(c => c.region)
+    const singelRegions = [...new Set(dublicateRegions)]
 
 
     // const senderRegios= useWatch({control,name:"senderArea"})
-    const senderRegion= watch("senderDistrict")
-
-    const disctritBYRegions=(regino)=>{
-        const discticts= reginospromise.filter(c=>c.region === regino)
-        const dis = discticts.map(d=> d.district)
-        return dis;
+    const senderRegion = watch("senderDistrict")
+    const reciverRegion = watch("receiverDistrict")
+const parcelType = watch("parcelType");
+    const disctritBYRegions = (regino) => {
+        const discticts = reginospromise.filter(c => c.region === regino)
+        const disctict = discticts.map(d => d.district)
+        return disctict;
 
     }
     // console.log(singelRegions)
-    useEffect(()=>{
+    useEffect(() => {
         fetch("/warehouses.json")
-        .then(res=>res.json())
-        .then(d=> setreginospromise(d))
-    },[])
+            .then(res => res.json())
+            .then(d => setreginospromise(d))
+    }, [])
 
-    
+
 
     const handelPercel = (data) => {
-        console.log(data);
+        // console.log(data);
+        const isDocument = data.parcelType == 'document';
+        const percelWeight = parseFloat(data.parcelWeight)
+        const isSameDistricts = data.senderDistrict == data.receiverDistrict
+        let cost = 0;
+        if (isDocument) {
+            cost = isSameDistricts ? 60 : 110;
+        }
+        else {
+            if (percelWeight < 3) {
+                cost = isSameDistricts ? 60 : 150;
+            }
+            else {
+                const minCharge = isDocument ? 110 : 150;
+                const extraWeight = percelWeight - 3;
+                const extraCharge = isSameDistricts ? extraWeight * 40 : extraWeight * 40 + 40
+                cost = extraCharge + minCharge
+            }
+        }
+        toast.success(cost)
+        console.log('cost', cost);
+
     }
 
     return (
@@ -84,10 +107,16 @@ const SendPercel = () => {
                             <input
                                 type="text"
                                 placeholder="Parcel Weight (kg)"
-                                {...register("parcelWeight", { required: true })}
+                                {...register("parcelWeight", {
+                                    required: parcelType === "document" ? false : "Weight is required"
+                                })}
                                 className="input input-bordered w-full rounded-xl h-14 px-4 shadow-sm"
                             />
-                            {errors.parcelWeight && <p className="text-red-400">Required</p>}
+
+                            {errors.parcelWeight && (
+                                <p className="text-red-500 text-sm">{errors.parcelWeight.message}</p>
+                            )}
+
                         </div>
                     </div>
 
@@ -137,7 +166,7 @@ const SendPercel = () => {
                                     <option value="">Select your District</option>
                                     {/* <option>Dhaka</option> */}
                                     {
-                                        singelRegions.map((r,i)=><option value={r} key={i}>{r}</option> )
+                                        singelRegions.map((r, i) => <option value={r} key={i}>{r}</option>)
                                     }
                                 </select>
                                 {errors.senderDistrict && <p className="text-red-400">Required</p>}
@@ -148,7 +177,7 @@ const SendPercel = () => {
                                     <option value="">Select your Area</option>
                                     {/* <option>Dhaka</option> */}
                                     {
-                                        disctritBYRegions(senderRegion).map((r,i)=><option value={r} key={i}>{r}</option> )
+                                        disctritBYRegions(senderRegion).map((r, i) => <option value={r} key={i}>{r}</option>)
                                     }
                                 </select>
                                 {errors?.senderArea && <p className="text-red-400">Required</p>}
@@ -197,12 +226,24 @@ const SendPercel = () => {
                                     className="select select-bordered w-full rounded-xl h-14"
                                 >
                                     <option value="">Select your District</option>
-                                     {
-                                        singelRegions.map((r,i)=><option value={r} key={i}>{r}</option> )
+                                    {
+                                        singelRegions.map((r, i) => <option value={r} key={i}>{r}</option>)
                                     }
                                 </select>
                                 {errors.receiverDistrict && <p className="text-red-400">Required</p>}
 
+
+                                <select
+                                    {...register("reciverArea", { required: true })}
+                                    className="select select-bordered w-full rounded-xl h-14"
+                                >
+                                    <option value="">Select your Area</option>
+                                    {/* <option>Dhaka</option> */}
+                                    {
+                                        disctritBYRegions(reciverRegion).map((r, i) => <option value={r} key={i}>{r}</option>)
+                                    }
+                                </select>
+                                {errors?.senderArea && <p className="text-red-400">Required</p>}
                                 <textarea
                                     placeholder="Delivery Instruction"
                                     {...register("deliveryInstruction")}
