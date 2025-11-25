@@ -12,6 +12,8 @@ import RiderFrom from '../Home/Rider/RiderFrom'
 import PrivateRoute from './PrivateRoute'
 import UserProfile from '../Home/UserProfile/UserProfile'
 import SendPercel from '../Pages/SendPercel/SendPercel'
+import DashboardLayout from '../layouts/DashboardLayout'
+import Mypercel from '../Pages/Dashboard/MyPercel/Mypercel'
 
 export const router = createBrowserRouter([
 
@@ -43,6 +45,15 @@ export const router = createBrowserRouter([
   children: [
     {path:"/login", Component: LogIn},
     { path:"/register", Component: Register}
+  ]
+},
+{
+  path: '/dashboard',
+  element: <PrivateRoute>
+    <DashboardLayout></DashboardLayout>
+  </PrivateRoute>,
+  children:[
+      {path:'/dashboard' , Component : Mypercel }
   ]
 }
 ])

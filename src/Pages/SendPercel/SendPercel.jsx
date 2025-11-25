@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { set, useForm, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
+import useAxios from '../../Hooks/useAxios';
+import useAuth from '../../Hooks/useAuth';
 
 const SendPercel = () => {
+    const {user}=useAuth();
     const { handleSubmit, register, control, watch, formState: { errors } } = useForm();
     const [reginospromise, setreginospromise] = useState([])
-    const [reginos, setreginos] = useState([])
+    const [reginos, setreginos] = useState([]);
+    const axiosSecure =useAxios();
     // console.log(reginospromise);
     const dublicateRegions = reginospromise.map(c => c.region)
     const singelRegions = [...new Set(dublicateRegions)]
@@ -14,7 +19,7 @@ const SendPercel = () => {
     // const senderRegios= useWatch({control,name:"senderArea"})
     const senderRegion = watch("senderDistrict")
     const reciverRegion = watch("receiverDistrict")
-const parcelType = watch("parcelType");
+    const parcelType = watch("parcelType");
     const disctritBYRegions = (regino) => {
         const discticts = reginospromise.filter(c => c.region === regino)
         const disctict = discticts.map(d => d.district)
@@ -50,10 +55,34 @@ const parcelType = watch("parcelType");
                 cost = extraCharge + minCharge
             }
         }
-        toast.success(cost)
-        console.log('cost', cost);
+        console.log('cost', data);
+        Swal.fire({
+            title: "Are you Sure?",
+            text:`You Will pay ${cost} Taka`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, I Agree"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                 axiosSecure.post('/percel',data)
+                 .then(res=>{
+                    console.log(res.data);
+                 })
+                Swal.fire({
+                   
+                    title: "Order Conform",
+                    text: "Your pay was success",
+                    icon: "success"
+                });
+            }
+        });
+
 
     }
+
+
 
     return (
         <div className="min-h-screen bg-gray-100 flex justify-center p-8">
@@ -95,6 +124,7 @@ const parcelType = watch("parcelType");
 
                         <div>
                             <input
+                                
                                 type="text"
                                 placeholder="Parcel Name"
                                 {...register("parcelName", { required: true })}
@@ -131,12 +161,23 @@ const parcelType = watch("parcelType");
 
                                 <div>
                                     <input
+                                    defaultValue={user?.displayName}
                                         type="text"
                                         placeholder="Sender Name"
                                         {...register("senderName", { required: true })}
                                         className="input input-bordered w-full rounded-xl h-14 px-4"
                                     />
                                     {errors.senderName && <p className="text-red-400">Required</p>}
+                                </div>
+                                <div>
+                                    <input
+                                    defaultValue={user?.email}
+                                        type="email"
+                                        placeholder="Sender Email"
+                                        {...register("senderEmail", { required: true })}
+                                        className="input input-bordered w-full rounded-xl h-14 px-4"
+                                    />
+                                    {errors?.senderEmail && <p className="text-red-400">Required</p>}
                                 </div>
 
                                 <div>
@@ -146,7 +187,7 @@ const parcelType = watch("parcelType");
                                         {...register("senderAddress", { required: true })}
                                         className="input input-bordered w-full rounded-xl h-14 px-4"
                                     />
-                                    {errors.senderAddress && <p className="text-red-400">Required</p>}
+                                    {errors?.senderAddress && <p className="text-red-400">Required</p>}
                                 </div>
 
                                 <div>
@@ -204,6 +245,13 @@ const parcelType = watch("parcelType");
                                     className="input input-bordered w-full rounded-xl h-14 px-4"
                                 />
                                 {errors.receiverName && <p className="text-red-400">Required</p>}
+                                <input
+                                    type="email"
+                                    placeholder="Receiver Email"
+                                    {...register("receiverEmail", { required: true })}
+                                    className="input input-bordered w-full rounded-xl h-14 px-4"
+                                />
+                                {errors.receiverEmail && <p className="text-red-400">Required</p>}
 
                                 <input
                                     type="text"
