@@ -5,45 +5,64 @@ import { useForm } from 'react-hook-form';
 import useAuth from './../../Hooks/useAuth';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import useAxios from '../../Hooks/useAxios';
+import SocialLogIn from '../SocialLogIn/SocialLogIn';
 
 const Register = () => {
+    const axiosSecure = useAxios();
 
-    const navigate= useNavigate()
+    const navigate = useNavigate()
     const { register,
         handleSubmit,
         formState: { errors }
     } = useForm()
 
-    const { signIn, createUser, signInWithGoogle ,user,setuser ,updateUserProfile} = useAuth();
+    const { signIn, createUser, signInWithGoogle, user, setuser, updateUserProfile } = useAuth();
     const handeelRegister = (data) => {
-        
-        const profileImage= data.image[0];
+
+        const profileImage = data.image[0];
         const fromData = new FormData();
-        fromData.append('image',profileImage)
+        fromData.append('image', profileImage)
         createUser(data.email, data.password)
-            .then(result => {
-            
-                
-                // const photoimageUrl= `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_API_IMAGE_KEY}`
-                axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_API_IMAGE_KEY}`, fromData)
-                .then(res=>{
-                  updateUserProfile(data?.name, res?.data?.data?.display_url)
-                  .then()
-                  .catch(err=>{
-                    // console.log(err);
-                  })
-                })
-                // console.log(updateUserProfile);
-                // setuser(result)
+            .then(() => {
+                const photoimageUrl= `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_API_IMAGE_KEY}`
+                axios.post(photoimageUrl, fromData)
+                    .then(res => {
+                        const photoURl= res?.data?.data?.display_url;
+
+                        //create to user database
+                        const userInfoo = {
+                            display_name: data.name,
+                            email: data.email,
+                            createdAt: new Date(),
+                            photoURl: photoURl,
+                        }
+                        axiosSecure.post('/users',userInfoo)
+                        .then((res)=>{
+                            if(res.data.insertedId){
+                                console.log('create file');
+                            }
+                        })
+                        .catch(err=>{
+                            console.log(err);
+                        })
+                        updateUserProfile(data?.name,photoURl )
+                            .then(() => {
+                               
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    })
                 toast.success("You Are SuccessFully Create Account")
             })
             .catch(err => {
                 console.log(err);
             })
     }
-    if(user){
-        navigate('/')
-    }
+    // if (user) {
+    //     navigate('/')
+    // }
     return (
         <div >
             <div className="w-full max-w-md">
@@ -62,11 +81,11 @@ const Register = () => {
                     />
                     {errors.name?.type === "required" && <span className='text-red-400'>This field is required</span>}
                     <label className="block text-sm font-semibold mb-1">Photo</label>
-           
+
                     <input
-                    type="file"
+                        type="file"
                         {...register('image', { required: true })}
-                        
+
                         placeholder="Image"
                         className=" file-input w-full border border-gray-300 rounded-md px-3 py-2 mb-4 focus:outline-none"
                     />
@@ -97,7 +116,7 @@ const Register = () => {
 
                     {/* Login Button */}
                     <button className="w-full bg-[#c7f36c] hover:bg-[#b8e85a] rounded-md py-2 font-semibold text-black mb-3">
-                       Register
+                        Register
                     </button>
                 </form>
 
@@ -117,11 +136,10 @@ const Register = () => {
                 </div>
 
                 {/* Google Login Button */}
-                <button className="w-full rounded-md bg-gray-100 py-2 flex items-center justify-center gap-2 border border-gray-200">
-                    {/* <img src={googleLogo} alt="google" className="w-5 h-5" /> */}
-                    {/* <OctagonAlert /> */}
+                <SocialLogIn></SocialLogIn>
+                {/* <button className="w-full rounded-md bg-gray-100 py-2 flex items-center justify-center gap-2 border border-gray-200">
                     <span className="text-sm">Login with google</span>
-                </button>
+                </button> */}
             </div>
 
         </div>

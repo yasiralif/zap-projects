@@ -20,8 +20,8 @@ const SendPercel = () => {
     const senderRegion = watch("senderDistrict")
     const reciverRegion = watch("receiverDistrict")
     const parcelType = watch("parcelType");
-    const disctritBYRegions = (regino) => {
-        const discticts = reginospromise.filter(c => c.region === regino)
+    const disctritBYRegions = (region) => {
+        const discticts = reginospromise.filter(c => c.region === region)
         const disctict = discticts.map(d => d.district)
         return disctict;
 

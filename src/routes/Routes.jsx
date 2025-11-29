@@ -18,6 +18,7 @@ import Payment from '../Pages/Dashboard/Payment/Payment'
 import PaymentSuccess from '../Pages/Dashboard/PaymentSuccess/PaymentSuccess'
 import PaymentCanceled from '../Pages/Dashboard/PaymentCanceled/PaymentCanceled'
 import PaymentHistory from '../Pages/Dashboard/PaymentHistory/PaymentHistory'
+import RiderCheck from '../Pages/Dashboard/RiderCheck/RiderCheck'
 
 export const router = createBrowserRouter([
 
@@ -28,7 +29,6 @@ export const router = createBrowserRouter([
     children: [
       {index: true , Component: Home},
       { path:'spiner', Component: Spiner},
-      // { path:'/login', Component: LogIn},
       { path:'/contact', Component: Contact},
       { path:'/about', Component: About},
      { path:'/rider' , element:<PrivateRoute>
@@ -62,7 +62,8 @@ export const router = createBrowserRouter([
      {path:"/dashboard/mypercel/:id", Component: Payment},
      {path:"/dashboard/payment-success", Component: PaymentSuccess},
      {path:"/dashboard/payment-canceled", Component: PaymentCanceled},
-     {path:"/dashboard/payment-history", Component: PaymentHistory}
+     {path:"/dashboard/payment-history", Component: PaymentHistory},
+     {path:"/dashboard/rider-status", Component: RiderCheck}
   ]
 }
 ])
