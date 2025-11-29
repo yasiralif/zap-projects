@@ -82,7 +82,7 @@ const Mypercel = () => {
                                 <td>pending</td>
                                 <td>
                                     {
-                                        d?.paymentStatus == 'paid'? "paid" :<Link to={`/dashboard/mypercel/${d._id}`}>
+                                        d?.payment_status == 'paid'? "paid" :<Link to={`/dashboard/mypercel/${d._id}`}>
                                     <button className='btn  bg-[#caeb66] hover:bg-primary'>Pay</button>
                                    </Link>
                                     }

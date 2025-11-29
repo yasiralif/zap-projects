@@ -17,6 +17,7 @@ import Mypercel from '../Pages/Dashboard/MyPercel/Mypercel'
 import Payment from '../Pages/Dashboard/Payment/Payment'
 import PaymentSuccess from '../Pages/Dashboard/PaymentSuccess/PaymentSuccess'
 import PaymentCanceled from '../Pages/Dashboard/PaymentCanceled/PaymentCanceled'
+import PaymentHistory from '../Pages/Dashboard/PaymentHistory/PaymentHistory'
 
 export const router = createBrowserRouter([
 
@@ -60,7 +61,8 @@ export const router = createBrowserRouter([
       {path:'/dashboard/mypercel' , Component : Mypercel },
      {path:"/dashboard/mypercel/:id", Component: Payment},
      {path:"/dashboard/payment-success", Component: PaymentSuccess},
-     {path:"/dashboard/payment-canceled", Component: PaymentCanceled}
+     {path:"/dashboard/payment-canceled", Component: PaymentCanceled},
+     {path:"/dashboard/payment-history", Component: PaymentHistory}
   ]
 }
 ])

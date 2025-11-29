@@ -55,6 +55,7 @@ const SendPercel = () => {
                 cost = extraCharge + minCharge
             }
         }
+        data.payment_status=''
         data.cost = cost
         console.log(data);
         // console.log('cost', data);

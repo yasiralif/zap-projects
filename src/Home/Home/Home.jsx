@@ -6,6 +6,7 @@ import HomeServices from '../HomeServices/HomeServices';
 import FQAQuestion from './FQA/FQAQuestion';
 import useAuth from '../../Hooks/useAuth';
 import Work from '../How It Work/Work';
+import OurService from './Our Serives/OurService';
 
 
 const Home = () => {
@@ -14,6 +15,7 @@ const Home = () => {
 
   return (
     <div className='gap-y-6'>
+      <OurService></OurService>
       <Work></Work>
      
       <Reviews ></Reviews>

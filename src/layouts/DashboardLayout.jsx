@@ -3,7 +3,7 @@ import { Link, Outlet } from 'react-router'
 import logo from '../assets/logo.png'
 import Logo from '../Comeponents/Shared/Logo'
 
-import { Box, House, Settings2 } from 'lucide-react';
+import { Box, CreditCard, House, Settings2 } from 'lucide-react';
 
 const DashboardLayout = () => {
   return (
@@ -39,6 +39,13 @@ const DashboardLayout = () => {
             {/* Home icon */}
             <House/>
             <span className="is-drawer-close:hidden">Homepage</span>
+          </Link>
+        </li>
+        <li>
+          <Link to='/dashboard/payment-history' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Payment History">
+            {/* Home icon */}
+            <CreditCard/>
+            <span className="is-drawer-close:hidden">Payment History</span>
           </Link>
         </li>
 
