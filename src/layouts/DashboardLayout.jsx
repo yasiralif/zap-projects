@@ -4,9 +4,11 @@ import logo from '../assets/logo.png'
 import Logo from '../Comeponents/Shared/Logo'
 import { MdDirectionsBike } from "react-icons/md";
 
-import { Box, CreditCard, House, Settings2 } from 'lucide-react';
+import {  CreditCard, House,  } from 'lucide-react';
 import useRole from '../Hooks/useRole';
-import { FaUserMd } from 'react-icons/fa';
+import { FaBoxOpen, FaUserMd } from 'react-icons/fa';
+import { CiSettings } from 'react-icons/ci';
+import { RiEBikeFill } from "react-icons/ri";
 
 
 const DashboardLayout = () => {
@@ -59,7 +61,7 @@ const DashboardLayout = () => {
             <li>
               <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
                 {/* Settings icon */}
-                <Settings2 />
+                <CiSettings />
                 <span className="is-drawer-close:hidden">Settings</span>
               </button>
             </li>
@@ -68,7 +70,7 @@ const DashboardLayout = () => {
             <li>
               <Link to='/dashboard/mypercel' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Percel">
                 {/* Settings icon */}
-                <Box />
+                <FaBoxOpen />
                 <span className="is-drawer-close:hidden">
 
                   My Percel</span>
@@ -84,6 +86,17 @@ const DashboardLayout = () => {
                     <span className="is-drawer-close:hidden">
 
                       User Management</span>
+                  </Link>
+                </li>
+
+                {/* rider assign */}
+                <li>
+                  <Link to='/dashboard/rider-assign' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Rider Assign">
+                    {/* Settings icon */}
+                    <RiEBikeFill />
+                    <span className="is-drawer-close:hidden">
+
+                      Rider Assign</span>
                   </Link>
                 </li>
 

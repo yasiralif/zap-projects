@@ -93,7 +93,7 @@ const PaymentHistory = () => {
             {percel.map((p, i) => (
               <tr key={i} className="border-b hover:bg-gray-50">
 
-                <td className="py-4">{p?.percelName}</td>
+                <td className="py-4">{p?.parcelName}</td>
 
                 <td className="py-4">
                   <p className="font-semibold">{p?.percelAddress}</p>

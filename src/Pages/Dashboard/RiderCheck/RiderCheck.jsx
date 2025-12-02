@@ -14,7 +14,8 @@ const RiderCheck = () => {
     })
     const handelApprove = (id) => {
         const roleUpdate = {
-            status: 'rider'
+            status: 'approved',
+            worKStatus: 'avilable'
         }
 
         Swal.fire({
@@ -26,9 +27,10 @@ const RiderCheck = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, I Agree"
         }).then((result) => {
-            refetch()
+            
             axiosSecure.patch(`/riders/${id}`, roleUpdate)
                 .then(res => {
+                    refetch()
                     if (res.data.modifiedCount) {
                         if (result.isConfirmed) {
                             Swal.fire({
@@ -64,7 +66,6 @@ const RiderCheck = () => {
                     if (res.data.deletedCount) {
                         if (result.isConfirmed) {
                             Swal.fire({
-
                                 title: "Confirme",
                                 text: "We are delete your request",
                                 icon: "success"
@@ -88,6 +89,7 @@ const RiderCheck = () => {
                             <th>NID Number</th>
                             <th>location</th>
                             <th>Status</th>
+                            <th>Work Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -100,6 +102,7 @@ const RiderCheck = () => {
                                 <td>{d.nid}</td>
                                 <td>{d?.district}</td>
                                 <td>{d.status}</td>
+                                <td>{d?.workStatus ? `${d?.workStatus}`: 'Not Avilable'}</td>
                                 <td>
                                     <button className="btn btn-ghost btn-xs">details</button>
                                     <button

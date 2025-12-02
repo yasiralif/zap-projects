@@ -20,6 +20,7 @@ const Mypercel = () => {
 
         }
     })
+    // console.log(percel);
 
     const handelPercelDelete = (id) => {
         console.log(id);
@@ -66,6 +67,8 @@ const Mypercel = () => {
                             <th></th>
                             <th>Name</th>
                             <th>Cost</th>
+                            <th>Sender Distict</th>
+                            <th>Reciver Distict</th>
                             <th>Delivery Status</th>
                             <th>Payment Status</th>
                             <th>Action</th>
@@ -79,7 +82,9 @@ const Mypercel = () => {
 
                                 <td>{d?.parcelName}</td>
                                 <td>{d?.cost}</td>
-                                <td>pending</td>
+                                <td>{d?.senderDistrict}</td>
+                                <td>{d?.receiverDistrict}</td>
+                                <td>{d?.deliveryStatus? `${d?.deliveryStatus}`: 'pendending'}</td>
                                 <td>
                                     {
                                         d?.payment_status == 'paid'? "paid" :<Link to={`/dashboard/mypercel/${d._id}`}>
