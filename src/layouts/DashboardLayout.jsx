@@ -4,7 +4,7 @@ import logo from '../assets/logo.png'
 import Logo from '../Comeponents/Shared/Logo'
 import { MdDirectionsBike } from "react-icons/md";
 
-import {  CreditCard, House,  } from 'lucide-react';
+import {  Bike, CreditCard, House,  } from 'lucide-react';
 import useRole from '../Hooks/useRole';
 import { FaBoxOpen, FaUserMd } from 'react-icons/fa';
 import { CiSettings } from 'react-icons/ci';
@@ -76,6 +76,9 @@ const DashboardLayout = () => {
                   My Percel</span>
               </Link>
             </li>
+
+
+            {/* admin only link  */}
             {
               role.role === 'admin' && <>
                 {/* user management */}
@@ -109,6 +112,24 @@ const DashboardLayout = () => {
                     <span className="is-drawer-close:hidden">Rider Status</span>
                   </Link>
                 </li>
+              </>
+            }
+
+
+
+            {/* rider only link  */}
+            {
+              role.role === 'rider' && <>
+                {/* Rider Task */}
+            <li>
+              <Link to='/dashboard/rider-task' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Rider Task">
+                {/* Settings icon */}
+                    <Bike />
+                <span className="is-drawer-close:hidden">
+
+                  Rider Task</span>
+              </Link>
+            </li>
               </>
             }
 

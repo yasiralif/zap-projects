@@ -98,7 +98,8 @@ const RiderFrom = () => {
                             <div>
                                 <input
                                     type="email"
-                                    defaultValue={user?.email}
+                                    // defaultValue={user?.email}
+                                    value={user?.email}
                                     placeholder="Your Email"
                                     className="input input-bordered w-full"
                                     {...register('email', { required: 'Email is required' })}

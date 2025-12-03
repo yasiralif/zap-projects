@@ -9,13 +9,16 @@ const RiderCheck = () => {
         queryKey: ['riders', 'pending'],
         queryFn: async () => {
             const res = await axiosSecure.get('/riders')
+            // const res = await axiosSecure.get('/users')
             return res.data
         }
     })
-    const handelApprove = (id) => {
+    const handelApprove = (d) => {
         const roleUpdate = {
             status: 'approved',
-            worKStatus: 'avilable'
+            worKStatus: 'avilable',
+            email: d.email
+
         }
 
         Swal.fire({
@@ -28,8 +31,9 @@ const RiderCheck = () => {
             confirmButtonText: "Yes, I Agree"
         }).then((result) => {
             
-            axiosSecure.patch(`/riders/${id}`, roleUpdate)
+            axiosSecure.patch(`/riders/${d._id}`, roleUpdate)
                 .then(res => {
+                    console.log(res.data);
                     refetch()
                     if (res.data.modifiedCount) {
                         if (result.isConfirmed) {
@@ -49,7 +53,7 @@ const RiderCheck = () => {
 
     }
 
-      const handelRejects = (id) => {
+      const handelRejects = (d) => {
           Swal.fire({
             title: "Are you Sure?",
             text: `You Request Checking`,
@@ -59,7 +63,7 @@ const RiderCheck = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, I Agree"
         }).then((result) => {
-            axiosSecure.delete(`/riders/${id}`)
+            axiosSecure.delete(`/riders/${d._id}`)
                 .then(res => {
                     refetch()
                     // console.log(res.data);
@@ -106,10 +110,10 @@ const RiderCheck = () => {
                                 <td>
                                     <button className="btn btn-ghost btn-xs">details</button>
                                     <button
-                                        onClick={() => handelApprove(d._id)}
+                                        onClick={() => handelApprove(d)}
                                         className="btn btn-ghost bg-green-300 mx-3 btn-xs">Approve</button>
                                     <button
-                                    onClick={()=>handelRejects(d._id)}
+                                    onClick={()=>handelRejects(d)}
                                     className="btn btn-ghost bg-red-400 btn-xs">Rejects</button>
 
                                 </td>

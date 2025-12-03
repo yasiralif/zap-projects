@@ -41,6 +41,9 @@ const RiderAssign = () => {
         // console.log(rider);
         axiosSecure.patch(`/percel/${selectedpercel._id}`,riderUpdateInfo)
         .then( res=>{
+            if(res.data.modifiedCount){
+                console.log(22);
+            }
             
             // console.log(res.data);
             // console.log(selectedpercel._id);

@@ -22,6 +22,8 @@ import RiderCheck from '../Pages/Dashboard/RiderCheck/RiderCheck'
 import UserMenagment from '../Pages/Dashboard/UserManagement/UserMenagment'
 import AdminRoute from './AdminRoute'
 import RiderAssign from '../Pages/Dashboard/RiderAssign/RiderAssign'
+import RiderTask from '../Pages/Dashboard/RiderTask/RiderTask/RiderTask'
+import RiderRoute from './RiderRoute'
 
 export const router = createBrowserRouter([
 
@@ -67,6 +69,7 @@ export const router = createBrowserRouter([
      {path:"/dashboard/payment-canceled", Component: PaymentCanceled},
      {path:"/dashboard/payment-history", Component: PaymentHistory},
      {path:"/dashboard/rider-assign", element: <AdminRoute> <RiderAssign></RiderAssign></AdminRoute>},
+     {path:"/dashboard/rider-task", element: <RiderRoute> <RiderTask></RiderTask></RiderRoute>},
      {path:"/dashboard/user-management", element: <AdminRoute> <UserMenagment></UserMenagment></AdminRoute>},
      {path:"/dashboard/rider-status", element: <AdminRoute> <RiderCheck></RiderCheck></AdminRoute>}
   ]
