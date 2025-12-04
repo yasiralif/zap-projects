@@ -24,6 +24,7 @@ const RiderAssign = () => {
         queryKey: ['assignRiders', selectedpercel?.receiverDistrict, 'avilable'],
         enabled: !!selectedpercel,
         queryFn: async () => {
+            refetch()
             const res = await axiosSecure.get(`/riders?status=approved&district=${selectedpercel?.receiverDistrict}&workStatus=avilable`)
             refetch()
             return res.data
@@ -35,8 +36,8 @@ const RiderAssign = () => {
             name: rider.name,
             email: rider.email,
             riderId: rider._id,
-            phoneNumber: rider.phoneNumber,
-            percelId: selectedpercel._id,
+            phoneNumber: rider.phoneNumber || '0185188347',
+            
         }
         // console.log(rider);
         axiosSecure.patch(`/percel/${selectedpercel._id}`,riderUpdateInfo)
@@ -44,9 +45,6 @@ const RiderAssign = () => {
             if(res.data.modifiedCount){
                 console.log(22);
             }
-            
-            // console.log(res.data);
-            // console.log(selectedpercel._id);
         })
 
     }
