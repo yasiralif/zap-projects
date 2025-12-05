@@ -21,10 +21,27 @@ const RiderCheck = () => {
 
         }
 
+
+        Swal.fire({
+            title: "Are you Sure?",
+            text: `You Request Checking`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, I Agree"
+        })
+        // refetch()
         axiosSecure.patch(`/riders/${d._id}`, roleUpdate)
         .then(res=>{
-            console.log("after sending data ",res.data);
-        })
+            refetch()
+            if(res.data.modifiedCount){
+                   
+          
+            }
+         
+        }
+    )
 
        
         

@@ -60,9 +60,9 @@ const Register = () => {
                 console.log(err);
             })
     }
-    // if (user) {
-    //     navigate('/')
-    // }
+    if (user) {
+        navigate('/')
+    }
     return (
         <div >
             <div className="w-full max-w-md">

@@ -9,6 +9,7 @@ import useRole from '../Hooks/useRole';
 import { FaBoxOpen, FaUserMd } from 'react-icons/fa';
 import { CiSettings } from 'react-icons/ci';
 import { RiEBikeFill } from "react-icons/ri";
+import { SiTask } from "react-icons/si";
 
 
 const DashboardLayout = () => {
@@ -125,6 +126,15 @@ const DashboardLayout = () => {
               <Link to='/dashboard/rider-task' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Rider Task">
                 {/* Settings icon */}
                     <Bike />
+                <span className="is-drawer-close:hidden">
+
+                  Rider Task</span>
+              </Link>
+            </li>
+            <li>
+              <Link to='/dashboard/rider-task' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Rider Task">
+                {/* Settings icon */}
+                    <SiTask />
                 <span className="is-drawer-close:hidden">
 
                   Rider Task</span>

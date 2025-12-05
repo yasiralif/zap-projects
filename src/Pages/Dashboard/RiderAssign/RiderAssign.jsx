@@ -2,13 +2,14 @@ import React, { useRef, useState } from 'react';
 import useAxios from '../../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../Hooks/useAuth';
+import toast from 'react-hot-toast';
 
 const RiderAssign = () => {
     const axiosSecure = useAxios();
     const { user } = useAuth();
     const [selectedpercel, setselectedpercel] = useState(null)
     const riderAssignRef = useRef();
-    const { data: percels = [] } = useQuery({
+    const { data: percels = [],refetch } = useQuery({
         queryKey: ['delivery-status', 'pending'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/percel?deliveryStatus=pending-pickup`)
@@ -20,13 +21,12 @@ const RiderAssign = () => {
         riderAssignRef.current.showModal()
     }
 
-    const { data: assignRiders = [] ,refetch} = useQuery({
+    const { data: assignRiders = [] } = useQuery({
         queryKey: ['assignRiders', selectedpercel?.receiverDistrict, 'avilable'],
         enabled: !!selectedpercel,
         queryFn: async () => {
-            refetch()
+            // refetch()
             const res = await axiosSecure.get(`/riders?status=approved&district=${selectedpercel?.receiverDistrict}&workStatus=avilable`)
-            refetch()
             return res.data
         }
     })
@@ -39,11 +39,18 @@ const RiderAssign = () => {
             phoneNumber: rider.phoneNumber || '0185188347',
             
         }
-        // console.log(rider);
+        console.log(riderUpdateInfo);
+        
         axiosSecure.patch(`/percel/${selectedpercel._id}`,riderUpdateInfo)
         .then( res=>{
+            refetch()
+            riderAssignRef.current.close()
+            
+            
+            console.log(res.data);
             if(res.data.modifiedCount){
-                console.log(22);
+            
+                toast.success('You Are SuccessFully Assign Rider')
             }
         })
 

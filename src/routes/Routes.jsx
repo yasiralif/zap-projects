@@ -70,6 +70,7 @@ export const router = createBrowserRouter([
      {path:"/dashboard/payment-history", Component: PaymentHistory},
      {path:"/dashboard/rider-assign", element: <AdminRoute> <RiderAssign></RiderAssign></AdminRoute>},
      {path:"/dashboard/rider-task", element: <RiderRoute> <RiderTask></RiderTask></RiderRoute>},
+     {path:"/dashboard/rider-task", element: <RiderRoute> <RiderTask></RiderTask></RiderRoute>},
      {path:"/dashboard/user-management", element: <AdminRoute> <UserMenagment></UserMenagment></AdminRoute>},
      {path:"/dashboard/rider-status", element: <AdminRoute> <RiderCheck></RiderCheck></AdminRoute>}
   ]
